@@ -10,9 +10,9 @@ services:
             - php
         restart: always
         networks:
-            wgtreks_network:
+            mysite_network:
                 aliases:
-                    - wgtreks.local
+                    - mysite.local
 
     php:
         build:
@@ -25,9 +25,9 @@ services:
             - mysql
         restart: always
         networks:
-            wgtreks_network:
+            mysite_network:
                 aliases:
-                    - wgtreks.local
+                    - mysite.local
 
     mysql:
         image: mariadb:latest
@@ -35,18 +35,18 @@ services:
             MYSQL_ROOT_PASSWORD: 'password'
             MYSQL_USER: 'abhinav'
             MYSQL_PASSWORD: 'password'
-            MYSQL_DATABASE: 'wgtreks'
+            MYSQL_DATABASE: 'mysite'
         volumes:
-            - wgtreks:/var/lib/mysql
+            - mysite:/var/lib/mysql
         ports:
             - "33061:3306"
         restart: always
         networks:
-            - wgtreks_network
+            - mysite_network
 
 volumes:
-    wgtreks: {}
+    mysite: {}
 
 networks:
-    wgtreks_network:
+    mysite_network:
         driver: bridge
