@@ -39,7 +39,7 @@ RUN set -eux; \
 
 RUN pecl install xdebug && docker-php-ext-enable xdebug
 
-RUN adduser abhinav
-USER abhinav
+RUN adduser mypcusername
+USER mypcusername
 
 CMD ["php-fpm"]

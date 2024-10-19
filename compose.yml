@@ -5,7 +5,7 @@ services:
             - "8010:80"
         volumes:
             - ./conf.d:/etc/nginx/conf.d
-            - ./public:/public
+            - ./app:/app
         depends_on:
             - php
         restart: always
@@ -19,7 +19,7 @@ services:
             context: .
             dockerfile: PHP.Dockerfile
         volumes:
-            - ./public:/public
+            - ./app:/app
             - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
         depends_on:
             - mysql
@@ -32,9 +32,9 @@ services:
     mysql:
         image: mariadb:latest
         environment:
-            MYSQL_ROOT_PASSWORD: 'password'
-            MYSQL_USER: 'abhinav'
-            MYSQL_PASSWORD: 'password'
+            MYSQL_ROOT_PASSWORD: 'mystrongpassword'
+            MYSQL_USER: 'myname'
+            MYSQL_PASSWORD: 'mystrongpassword'
             MYSQL_DATABASE: 'mysite'
         volumes:
             - mysite:/var/lib/mysql
