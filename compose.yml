@@ -1,0 +1,52 @@
+services:
+    web:
+        image: nginx:latest
+        ports:
+            - "8010:80"
+        volumes:
+            - ./conf.d:/etc/nginx/conf.d
+            - ./public:/public
+        depends_on:
+            - php
+        restart: always
+        networks:
+            wgtreks_network:
+                aliases:
+                    - wgtreks.local
+
+    php:
+        build:
+            context: .
+            dockerfile: PHP.Dockerfile
+        volumes:
+            - ./public:/public
+            - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+        depends_on:
+            - mysql
+        restart: always
+        networks:
+            wgtreks_network:
+                aliases:
+                    - wgtreks.local
+
+    mysql:
+        image: mariadb:latest
+        environment:
+            MYSQL_ROOT_PASSWORD: 'password'
+            MYSQL_USER: 'abhinav'
+            MYSQL_PASSWORD: 'password'
+            MYSQL_DATABASE: 'wgtreks'
+        volumes:
+            - wgtreks:/var/lib/mysql
+        ports:
+            - "33061:3306"
+        restart: always
+        networks:
+            - wgtreks_network
+
+volumes:
+    wgtreks: {}
+
+networks:
+    wgtreks_network:
+        driver: bridge
